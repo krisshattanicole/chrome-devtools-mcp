@@ -97,14 +97,29 @@ ngrok http 3000
 ## How It Works
 
 1. GitHub sends a webhook when a PR is opened or updated
-2. The server receives the webhook and verifies the signature
-3. Creates a GitHub check run with status "in_progress"
-4. Uses Chrome DevTools MCP to:
+2. The server applies rate limiting (60 requests per minute per IP)
+3. The server verifies the webhook signature for security
+4. Creates a GitHub check run with status "in_progress"
+5. Uses Chrome DevTools MCP to:
    - Navigate to the preview deployment
    - Run performance tests
    - Take screenshots
    - Check for console errors
-5. Updates the GitHub check run with results (pass/fail)
+6. Updates the GitHub check run with results (pass/fail)
+
+## Security Features
+
+This example includes several security measures:
+
+- **Webhook Signature Verification**: Validates all incoming webhooks using HMAC SHA-256
+- **Rate Limiting**: Limits requests to 60 per minute per IP address to prevent abuse
+- **Environment Variables**: Sensitive data (keys, secrets) stored in environment variables, not code
+
+For production use, consider additional security measures like:
+- Using a proper rate limiting library (e.g., express-rate-limit)
+- Implementing request logging and monitoring
+- Running behind a reverse proxy (e.g., nginx)
+- Setting up firewall rules
 
 ## Testing
 

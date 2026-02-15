@@ -100,6 +100,37 @@ class MCPClient {
   }
 }
 
+// Simple in-memory rate limiter
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 60; // Max 60 requests per minute per IP
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const clientData = rateLimitMap.get(ip) || { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS };
+  
+  // Reset if window expired
+  if (now > clientData.resetAt) {
+    clientData.count = 0;
+    clientData.resetAt = now + RATE_LIMIT_WINDOW_MS;
+  }
+  
+  clientData.count++;
+  rateLimitMap.set(ip, clientData);
+  
+  return clientData.count <= MAX_REQUESTS_PER_WINDOW;
+}
+
+// Clean up rate limit map periodically
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, data] of rateLimitMap.entries()) {
+    if (now > data.resetAt) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}, RATE_LIMIT_WINDOW_MS);
+
 // Verify webhook signature
 function verifySignature(req) {
   const signature = req.headers['x-hub-signature-256'];
@@ -217,8 +248,15 @@ async function testPullRequest(octokit, owner, repo, pr) {
   }
 }
 
-// Webhook endpoint
+// Webhook endpoint with rate limiting and signature verification
 app.post('/webhook', async (req, res) => {
+  // Rate limiting: Max 60 requests per minute per IP
+  const clientIp = req.ip || req.connection.remoteAddress;
+  if (!checkRateLimit(clientIp)) {
+    console.error(`Rate limit exceeded for ${clientIp}`);
+    return res.status(429).send('Too Many Requests');
+  }
+
   // Verify signature
   if (!verifySignature(req)) {
     console.error('Invalid webhook signature');
