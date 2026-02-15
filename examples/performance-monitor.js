@@ -40,7 +40,10 @@ class PerformanceMonitor {
           this.pendingRequests.delete(response.id);
         }
       } catch (error) {
-        // Ignore parse errors
+        // Log parse errors in debug mode
+        if (process.env.DEBUG) {
+          console.error('Failed to parse MCP response:', error.message);
+        }
       }
     });
 

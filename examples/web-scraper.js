@@ -42,7 +42,10 @@ class WebScraper {
           this.pendingRequests.delete(response.id);
         }
       } catch (error) {
-        // Ignore
+        // Log parse errors in debug mode
+        if (process.env.DEBUG) {
+          console.error('Failed to parse MCP response:', error.message);
+        }
       }
     });
 
@@ -148,19 +151,21 @@ class WebScraper {
       
       // Custom selector if provided
       if (options.selector) {
-        // Validate selector to prevent injection
-        const sanitizedSelector = options.selector.replace(/['"]/g, '');
+        // Pass selector as JSON to avoid injection vulnerabilities
         const customResult = await this.callTool('evaluate_script', {
           script: `
-            try {
-              // Validate selector by attempting to use it
-              document.querySelector('${sanitizedSelector}');
-              return Array.from(document.querySelectorAll('${sanitizedSelector}'))
-                .map(el => el.textContent.trim());
-            } catch (e) {
-              console.error('Invalid selector:', e);
-              return [];
-            }
+            (function() {
+              try {
+                const selector = ${JSON.stringify(options.selector)};
+                // Validate selector by attempting to use it
+                document.querySelector(selector);
+                return Array.from(document.querySelectorAll(selector))
+                  .map(el => el.textContent.trim());
+              } catch (e) {
+                console.error('Invalid selector:', e.message);
+                return [];
+              }
+            })()
           `
         });
         data.customData = JSON.parse(customResult.content[0]?.text || '[]');

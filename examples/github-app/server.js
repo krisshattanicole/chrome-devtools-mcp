@@ -201,7 +201,12 @@ async function testPullRequest(octokit, owner, repo, pr) {
       if (errors.length > 0) {
         passed = false;
         summary += `Found ${errors.length} console error(s). `;
-        details += `\n\n## Console Errors\n\`\`\`\n${errors.map(e => e.text).join('\n')}\n\`\`\`\n`;
+        const errorText = errors.map(e => e.text).join('\n');
+        // Limit console error output length
+        const truncatedErrorText = errorText.length > MAX_PERFORMANCE_OUTPUT_LENGTH 
+          ? errorText.substring(0, MAX_PERFORMANCE_OUTPUT_LENGTH) + '\n... (truncated)'
+          : errorText;
+        details += `\n\n## Console Errors\n\`\`\`\n${truncatedErrorText}\n\`\`\`\n`;
       } else {
         summary += 'No console errors. ';
       }
