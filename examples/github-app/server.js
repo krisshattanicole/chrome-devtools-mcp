@@ -20,6 +20,11 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+// Configuration constants
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 60; // Max 60 requests per minute per IP
+const MAX_PERFORMANCE_OUTPUT_LENGTH = 1000; // Maximum characters to include in check output
+
 // GitHub App configuration
 const githubApp = new App({
   appId: process.env.GITHUB_APP_ID,
@@ -102,8 +107,6 @@ class MCPClient {
 
 // Simple in-memory rate limiter
 const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 60; // Max 60 requests per minute per IP
 
 function checkRateLimit(ip) {
   const now = Date.now();
@@ -207,7 +210,7 @@ async function testPullRequest(octokit, owner, repo, pr) {
     }
 
     // Add performance info
-    details += `\n## Performance\n\`\`\`json\n${performanceText.substring(0, 1000)}\n\`\`\`\n`;
+    details += `\n## Performance\n\`\`\`json\n${performanceText.substring(0, MAX_PERFORMANCE_OUTPUT_LENGTH)}\n\`\`\`\n`;
 
     // Update check run with results
     await octokit.checks.update({

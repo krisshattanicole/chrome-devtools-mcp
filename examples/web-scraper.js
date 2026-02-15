@@ -148,10 +148,19 @@ class WebScraper {
       
       // Custom selector if provided
       if (options.selector) {
+        // Validate selector to prevent injection
+        const sanitizedSelector = options.selector.replace(/['"]/g, '');
         const customResult = await this.callTool('evaluate_script', {
           script: `
-            return Array.from(document.querySelectorAll('${options.selector}'))
-              .map(el => el.textContent.trim());
+            try {
+              // Validate selector by attempting to use it
+              document.querySelector('${sanitizedSelector}');
+              return Array.from(document.querySelectorAll('${sanitizedSelector}'))
+                .map(el => el.textContent.trim());
+            } catch (e) {
+              console.error('Invalid selector:', e);
+              return [];
+            }
           `
         });
         data.customData = JSON.parse(customResult.content[0]?.text || '[]');
