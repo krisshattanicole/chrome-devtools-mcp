@@ -1,0 +1,20 @@
+{
+  "name": "chrome-devtools-mcp-github-app-example",
+  "version": "1.0.0",
+  "description": "Example GitHub App using Chrome DevTools MCP",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@octokit/app": "^15.0.0",
+    "@octokit/rest": "^21.0.0",
+    "express": "^4.18.2",
+    "dotenv": "^16.0.3"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

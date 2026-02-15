@@ -7,7 +7,7 @@ control and inspect a live Chrome browser. It acts as a Model-Context-Protocol
 (MCP) server, giving your AI coding assistant access to the full power of
 Chrome DevTools for reliable automation, in-depth debugging, and performance analysis.
 
-## [Tool reference](./docs/tool-reference.md) | [Changelog](./CHANGELOG.md) | [Contributing](./CONTRIBUTING.md) | [Troubleshooting](./docs/troubleshooting.md) | [Design Principles](./docs/design-principles.md)
+## [Tool reference](./docs/tool-reference.md) | [Building Applications](./docs/building-applications.md) | [Changelog](./CHANGELOG.md) | [Contributing](./CONTRIBUTING.md) | [Troubleshooting](./docs/troubleshooting.md) | [Design Principles](./docs/design-principles.md)
 
 ## Key features
 
@@ -666,6 +666,42 @@ For more details on remote debugging, see the [Chrome DevTools documentation](ht
 ### Debugging Chrome on Android
 
 Please consult [these instructions](./docs/debugging-android.md).
+
+## Building Applications
+
+You can build your own applications and integrations using Chrome DevTools MCP! The MCP server provides a powerful interface for:
+
+- **Automated testing frameworks**
+- **Performance monitoring tools**
+- **Web scraping applications**
+- **GitHub Apps for CI/CD**
+- **Custom development tools**
+
+Check out our comprehensive [Building Applications Guide](./docs/building-applications.md) which includes:
+- Node.js integration examples
+- GitHub App tutorial
+- Working code samples in the [`examples/`](./examples/) directory
+
+### Quick Example
+
+Here's a simple example of using Chrome DevTools MCP in your application:
+
+```javascript
+import { spawn } from 'child_process';
+import { createInterface } from 'readline';
+
+// Start the MCP server
+const mcpServer = spawn('npx', ['-y', 'chrome-devtools-mcp@latest']);
+
+// Connect and use MCP tools
+// See examples/ directory for complete working examples
+```
+
+For complete examples, see:
+- [`examples/basic-client.js`](./examples/basic-client.js) - Basic integration
+- [`examples/performance-monitor.js`](./examples/performance-monitor.js) - Performance monitoring
+- [`examples/web-scraper.js`](./examples/web-scraper.js) - Web scraping
+- [`examples/github-app/`](./examples/github-app/) - GitHub App integration
 
 ## Known limitations
 

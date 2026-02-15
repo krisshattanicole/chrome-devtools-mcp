@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+
+# Generated files
+*.json
+!package.json
+*.png
+*.jpg
+*.jpeg
+
+# GitHub App private keys
+*.pem
+
+# Logs
+*.log
