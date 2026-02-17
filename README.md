@@ -1,11 +1,14 @@
 # Chrome DevTools MCP
 
 [![npm chrome-devtools-mcp package](https://img.shields.io/npm/v/chrome-devtools-mcp.svg)](https://npmjs.org/package/chrome-devtools-mcp)
+[![GitHub](https://img.shields.io/github/stars/krisshattanicole/chrome-devtools-mcp?style=social)](https://github.com/krisshattanicole/chrome-devtools-mcp)
 
 `chrome-devtools-mcp` lets your coding agent (such as Gemini, Claude, Cursor or Copilot)
 control and inspect a live Chrome browser. It acts as a Model-Context-Protocol
 (MCP) server, giving your AI coding assistant access to the full power of
 Chrome DevTools for reliable automation, in-depth debugging, and performance analysis.
+
+## 🚀 [What You Can Build](./WHAT_YOU_CAN_BUILD.md) | [Integration Guide](./INTEGRATION_GUIDE.md)
 
 ## [Tool reference](./docs/tool-reference.md) | [Building Applications](./docs/building-applications.md) | [Changelog](./CHANGELOG.md) | [Contributing](./CONTRIBUTING.md) | [Troubleshooting](./docs/troubleshooting.md) | [Design Principles](./docs/design-principles.md)
 
@@ -48,6 +51,53 @@ Google handles this data in accordance with the [Google Privacy Policy](https://
 Google's collection of usage statistics for Chrome DevTools MCP is independent from the Chrome browser's usage statistics. Opting out of Chrome metrics does not automatically opt you out of this tool, and vice-versa.
 
 Collection is disabled if CHROME_DEVTOOLS_MCP_NO_USAGE_STATISTICS or CI env variables are set.
+
+## 💡 What You Can Build
+
+This repository enables you to build powerful browser automation applications:
+
+### 🧪 **Testing & QA**
+- **E2E Testing Frameworks** - Automated user flow testing
+- **Visual Regression Testing** - Screenshot comparison and UI validation  
+- **Performance Testing** - Real performance metrics (LCP, FID, CLS)
+- **Accessibility Testing** - WCAG compliance checking
+
+### 🔍 **Monitoring & Observability**
+- **Website Performance Monitors** - Continuous performance tracking
+- **Uptime Monitoring** - With screenshots on failures
+- **Error Tracking** - JavaScript error collection with source maps
+- **Synthetic Monitoring** - Real user simulation
+
+### 🤖 **Automation & Scraping**
+- **Web Scrapers** - JavaScript-rendered content extraction
+- **Data Collection Pipelines** - Automated data gathering
+- **Screenshot Services** - On-demand webpage screenshots
+- **Browser Automation Scripts** - Custom automation workflows
+
+### 🚀 **CI/CD Integration**
+- **GitHub Apps** - PR testing with performance reports ([example](./examples/github-app/))
+- **GitLab/Jenkins Pipelines** - Automated browser testing
+- **Check Runs** - Test results as GitHub status checks
+
+### 🎯 **Development Tools**
+- **AI Agent Integration** - Works with Copilot, Claude, Cursor, Gemini
+- **Custom MCP Tools** - Build your own browser automation tools
+- **Testing Utilities** - Shared test infrastructure
+
+**📖 [See Full Guide: What You Can Build →](./WHAT_YOU_CAN_BUILD.md)**
+
+## 🔗 Integration & Vendoring
+
+Use this repository in your projects:
+
+- **NPM Package**: `npm install chrome-devtools-mcp`
+- **Git Submodule**: For monorepos and version pinning
+- **Direct Vendoring**: Copy files for air-gapped environments
+- **Monorepo Workspaces**: Shared across multiple packages
+
+**📖 [See Integration Guide →](./INTEGRATION_GUIDE.md)**
+
+---
 
 ## Requirements
 
@@ -182,9 +232,9 @@ Configure the following fields and press `CTRL+S` to save the configuration:
 
 **Click the button to install:**
 
-[<img src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Server&color=0098FF" alt="Install in VS Code">](https://vscode.dev/redirect/mcp/install?name=io.github.ChromeDevTools%2Fchrome-devtools-mcp&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22chrome-devtools-mcp%22%5D%2C%22env%22%3A%7B%7D%7D)
+[<img src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Server&color=0098FF" alt="Install in VS Code">](https://vscode.dev/redirect/mcp/install?name=io.github.krisshattanicole%2Fchrome-devtools-mcp&config=%7B%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22chrome-devtools-mcp%22%5D%2C%22env%22%3A%7B%7D%7D)
 
-[<img src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Install%20Server&color=24bfa5" alt="Install in VS Code Insiders">](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522io.github.ChromeDevTools%252Fchrome-devtools-mcp%2522%252C%2522config%2522%253A%257B%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522-y%2522%252C%2522chrome-devtools-mcp%2522%255D%252C%2522env%2522%253A%257B%257D%257D%257D)
+[<img src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Install%20Server&color=24bfa5" alt="Install in VS Code Insiders">](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522io.github.krisshattanicole%252Fchrome-devtools-mcp%2522%252C%2522config%2522%253A%257B%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522-y%2522%252C%2522chrome-devtools-mcp%2522%255D%252C%2522env%2522%253A%257B%257D%257D%257D)
 
 **Or install manually:**
 
@@ -192,7 +242,7 @@ Follow the MCP install <a href="https://code.visualstudio.com/docs/copilot/chat/
 with the standard config from above. You can also install the Chrome DevTools MCP server using the VS Code CLI:
 
 ```bash
-code --add-mcp '{"name":"io.github.ChromeDevTools/chrome-devtools-mcp","command":"npx","args":["-y","chrome-devtools-mcp"],"env":{}}'
+code --add-mcp '{"name":"io.github.krisshattanicole/chrome-devtools-mcp","command":"npx","args":["-y","chrome-devtools-mcp"],"env":{}}'
 ```
 
 </details>
@@ -230,7 +280,7 @@ Install the Chrome DevTools MCP server using the Gemini CLI.
 # Either MCP only:
 gemini mcp add chrome-devtools npx chrome-devtools-mcp@latest
 # Or as a Gemini extension (MCP+Skills):
-gemini extensions install --auto-update https://github.com/ChromeDevTools/chrome-devtools-mcp
+gemini extensions install --auto-update https://github.com/krisshattanicole/chrome-devtools-mcp
 ```
 
 **Globally:**
@@ -400,7 +450,7 @@ The Chrome DevTools MCP server supports the following configuration option:
   - **Default:** `false`
 
 - **`--browserUrl`/ `--browser-url`, `-u`**
-  Connect to a running, debuggable Chrome instance (e.g. `http://127.0.0.1:9222`). For more details see: https://github.com/ChromeDevTools/chrome-devtools-mcp#connecting-to-a-running-chrome-instance.
+  Connect to a running, debuggable Chrome instance (e.g. `http://127.0.0.1:9222`). For more details see: https://github.com/krisshattanicole/chrome-devtools-mcp#connecting-to-a-running-chrome-instance.
   - **Type:** string
 
 - **`--wsEndpoint`/ `--ws-endpoint`, `-w`**
